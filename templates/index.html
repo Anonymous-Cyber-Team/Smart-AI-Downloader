@@ -17,130 +17,113 @@
             background-color: var(--bg-color);
             color: var(--main-color);
             font-family: 'Share Tech Mono', monospace;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            /* Smooth Transition for Colors */
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow: hidden;
             transition: color 2s ease, border-color 2s ease;
         }
 
-        /* SMOOTH RGB ANIMATION */
+        /* ULTRA SMOOTH RGB ANIMATION (30 Seconds Loop) */
         @keyframes rgbSmooth {
-            0% { --main-color: #00ff41; } /* Green */
-            25% { --main-color: #00ffff; } /* Cyan */
-            50% { --main-color: #0088ff; } /* Blue */
-            75% { --main-color: #ff00ff; } /* Magenta */
-            100% { --main-color: #00ff41; } /* Loop back */
+            0% { --main-color: hsl(0, 100%, 50%); }
+            25% { --main-color: hsl(90, 100%, 50%); }
+            50% { --main-color: hsl(180, 100%, 50%); }
+            75% { --main-color: hsl(270, 100%, 50%); }
+            100% { --main-color: hsl(360, 100%, 50%); }
         }
+        body.rgb-mode { animation: rgbSmooth 30s linear infinite; }
 
-        body.rgb-mode {
-            animation: rgbSmooth 15s infinite linear; /* 15 Seconds Loop */
-        }
-
+        /* Common Styles */
         .container {
-            width: 90%;
-            max-width: 650px;
+            width: 90%; max-width: 650px;
             border: 1px solid var(--main-color);
-            padding: 25px;
-            background: var(--panel-bg);
+            padding: 25px; background: var(--panel-bg);
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
             transition: border-color 2s ease;
         }
-
-        h1 { text-align: center; border-bottom: 1px dashed var(--main-color); padding-bottom: 15px; margin-top: 0; letter-spacing: 2px; transition: border-color 2s ease; }
-
-        /* Inputs & Buttons */
-        button, select, input[type="text"], input[type="password"], textarea {
-            background: #111;
-            color: var(--main-color);
-            border: 1px solid var(--main-color);
-            padding: 15px;
-            font-family: inherit;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            outline: none;
-            width: 100%;
-            box-sizing: border-box;
+        h1 { text-align: center; border-bottom: 1px dashed var(--main-color); padding-bottom: 15px; margin-top: 0; letter-spacing: 2px; }
+        button, select, input, textarea {
+            background: #111; color: var(--main-color);
+            border: 1px solid var(--main-color); padding: 15px;
+            font-family: inherit; font-size: 1rem; cursor: pointer;
+            transition: all 0.3s; outline: none; width: 100%; box-sizing: border-box;
         }
+        button:hover { background: var(--main-color); color: #000; box-shadow: 0 0 15px var(--main-color); }
 
-        button:hover {
-            background: var(--main-color);
-            color: #000;
-            box-shadow: 0 0 15px var(--main-color);
-        }
-
-        /* Custom Alert Modal */
-        .custom-alert-overlay {
-            display: none;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(5px); /* Blur Effect */
-            justify-content: center; align-items: center;
-            z-index: 100;
-        }
-        .custom-alert-box {
-            background: #000; border: 2px solid var(--main-color);
-            padding: 30px; text-align: center; max-width: 400px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.9);
-        }
-        .alert-btn { margin-top: 20px; width: auto; padding: 10px 30px; }
-
-        /* Login Screen */
+        /* Login Styles */
         #loginSection {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 50;
-            display: flex; justify-content: center; align-items: center;
+            background: #000; z-index: 50; display: flex; justify-content: center; align-items: center;
         }
-        .login-box {
-            width: 350px; padding: 40px; border: 1px solid var(--main-color);
-            text-align: center;
-        }
+        .login-box { width: 380px; padding: 40px; border: 1px solid var(--main-color); text-align: center; }
+        .login-socials { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+        .contact-admin-text { font-size: 0.8rem; margin-top: 20px; color: #888; border-top: 1px dashed #333; padding-top: 10px;}
 
-        /* Drawer & Icons */
-        .drawer {
-            height: 100%; width: 0; position: fixed; z-index: 10; top: 0; left: 0;
-            background-color: #000; border-right: 1px solid var(--main-color);
-            overflow-x: hidden; transition: 0.4s; padding-top: 60px;
-            box-shadow: 10px 0 50px rgba(0,0,0,0.9); white-space: nowrap;
+        /* Main UI Styles */
+        .status-bar {
+            display: flex; justify-content: space-between; /* Far Left and Far Right */
+            background: #111; padding: 10px 15px; margin-bottom: 20px;
+            border: 1px solid var(--main-color); font-size: 0.85rem;
         }
+        .path-box {
+            background: #111; padding: 10px; margin-bottom: 20px;
+            border-left: 3px solid var(--main-color);
+            font-size: 0.85rem; color: #ccc;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .run-btn { grid-column: span 2; background: rgba(0, 255, 65, 0.1); font-weight: bold; border-width: 2px; }
+        .terminal { background: #000; border: 1px solid var(--main-color); padding: 15px; height: 150px; overflow-y: auto; margin-top: 20px; color: #ccc; font-size: 0.8rem; }
+
+        /* Alert Popup */
+        .custom-alert-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; justify-content: center; align-items: center; }
+        .custom-alert-box { background: #000; border: 2px solid var(--main-color); padding: 30px; text-align: center; max-width: 400px; }
+        .alert-socials { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+
+        /* Icons & Drawer */
+        .drawer { height: 100%; width: 0; position: fixed; z-index: 10; top: 0; left: 0; background: #000; border-right: 1px solid var(--main-color); overflow-x: hidden; transition: 0.4s; padding-top: 60px; box-shadow: 10px 0 50px rgba(0,0,0,0.9); white-space: nowrap; }
         .drawer.open { width: 300px; }
-        .drawer-content { padding: 20px; text-align: center; opacity: 0; transition: opacity 0.3s; }
+        .drawer-content { opacity: 0; transition: opacity 0.3s; padding: 20px; text-align: center; }
         .drawer.open .drawer-content { opacity: 1; }
         .closebtn { position: absolute; top: 10px; right: 20px; font-size: 36px; cursor: pointer; }
         .social-icons { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-        svg { fill: var(--main-color); width: 28px; height: 28px; transition: fill 2s ease; }
 
-        /* Helper Classes */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .hidden { display: none !important; }
-        .run-btn { grid-column: span 2; background: rgba(0, 255, 65, 0.1); font-weight: bold; border-width: 2px; }
-        .terminal { background: #000; border: 1px solid var(--main-color); padding: 15px; height: 150px; overflow-y: auto; margin-top: 20px; color: #ccc; font-size: 0.8rem; }
+        /* FIXED SVG ICON STYLE */
+        svg { fill: var(--main-color) !important; width: 28px; height: 28px; transition: transform 0.2s; }
+        svg:hover { transform: scale(1.2); }
 
         /* Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 50; }
         .modal-box { background: #000; border: 1px solid var(--main-color); padding: 20px; width: 90%; max-width: 400px; }
-        .dynamic-color { color: var(--main-color); border-color: var(--main-color); transition: all 2s ease; }
 
-        /* Expiry Date Position */
-        .expiry-display {
-            position: fixed; bottom: 10px; right: 20px; font-size: 0.8rem; color: #666;
-        }
+        /* Helpers */
+        .hidden { display: none !important; }
+        .dynamic-color { color: var(--main-color); border-color: var(--main-color); transition: all 2s ease; }
+        .expiry-display { position: fixed; bottom: 10px; right: 20px; font-size: 0.8rem; color: #666; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; justify-content: center; }
+        input[type="checkbox"] { width: auto; margin: 0; }
     </style>
 </head>
 <body class="rgb-mode">
 
     <div id="customAlert" class="custom-alert-overlay">
         <div class="custom-alert-box">
-            <h2 id="alertTitle">SYSTEM MESSAGE</h2>
-            <p id="alertMsg">Action Completed Successfully</p>
-            <button class="alert-btn" onclick="closeAlert()">OK</button>
+            <h2 id="alertTitle">ALERT</h2>
+            <p id="alertMsg">Message</p>
+
+            <div id="alertSocials" class="alert-socials hidden">
+                <a href="{{ admin.socials.facebook }}" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 22.954 24 17.99 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="{{ admin.socials.whatsapp }}" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                </a>
+                <a href="{{ admin.socials.telegram }}" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.638z"/></svg>
+                </a>
+            </div>
+            <button class="alert-btn" onclick="closeAlert()" style="margin-top: 20px;">OK</button>
         </div>
     </div>
 
@@ -148,11 +131,33 @@
         <div class="login-box">
             <h1>SECURE ACCESS</h1>
             <input type="text" id="loginUser" placeholder="Username" style="margin-bottom: 15px;">
-            <input type="password" id="loginPass" placeholder="Password" style="margin-bottom: 20px;">
+            <input type="password" id="loginPass" placeholder="Password" style="margin-bottom: 10px;">
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="rememberMe"> <label for="rememberMe">Remember Me</label>
+            </div>
+
             <button onclick="handleLogin()">LOGIN</button>
 
-            <div style="margin-top: 30px; border-top: 1px dashed #333; padding-top: 10px;">
-                <button onclick="showDeviceId()" style="font-size: 0.8rem; padding: 10px;">GET DEVICE ID</button>
+            <div style="margin-top: 20px; padding-top: 10px;">
+                <button onclick="showDeviceId()" style="font-size: 0.8rem; padding: 10px; margin-bottom: 15px;">GET DEVICE ID</button>
+
+                <div class="contact-admin-text">
+                    CONTACT ADMIN FOR PASSWORD
+                </div>
+                <div class="login-socials">
+                    <a href="{{ admin.socials.facebook }}" target="_blank">
+    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--main-color);">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+    </svg>
+</a>
+                    <a href="{{ admin.socials.whatsapp }}" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    </a>
+                    <a href="{{ admin.socials.telegram }}" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.638z"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -165,9 +170,17 @@
                 <h2>{{ admin.name }}</h2>
                 <p style="white-space: normal; color: #ccc;">{{ admin.bio }}</p>
                 <div class="social-icons">
-                    <a href="{{ admin.socials.facebook }}" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 22.954 24 17.99 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
-                    <a href="{{ admin.socials.whatsapp }}" target="_blank"><svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
-                    <a href="{{ admin.socials.telegram }}" target="_blank"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.638z"/></svg></a>
+                    <a href="{{ admin.socials.facebook }}" target="_blank">
+    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--main-color);">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+    </svg>
+</a>
+                    <a href="{{ admin.socials.whatsapp }}" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    </a>
+                    <a href="{{ admin.socials.telegram }}" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.638z"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -192,43 +205,34 @@
                 <span>SYSTEM: ONLINE</span>
                 <span>AI:
                     {% if ai_status %}
-                    <span class="status-active">[ ACTIVE ] ({{ model }})</span>
+                    <span class="status-active" style="color: var(--main-color);">[ ACTIVE ] ({{ model }})</span>
                     {% else %}
                     <span class="status-inactive">[ INACTIVE ]</span>
                     {% endif %}
                 </span>
             </div>
 
-            <div style="margin-bottom: 15px; font-size: 0.8rem; color: #888; text-align: center;">
-                CURRENT PATH: <span class="path-text" style="color:#fff;">{{ path }}</span>
+            <div class="path-box dynamic-color">
+                <span style="color:#888;">CURRENT PATH: </span>
+                <span class="path-text" style="color:#fff;">{{ path }}</span>
             </div>
 
             <div class="btn-grid">
-                <button onclick="openModal('apiModal')">[ API CONFIG ]</button>
-                <button onclick="openModal('pathModal')">[ SET PATH ]</button>
-                <button onclick="openModal('linkModal')" style="grid-column: span 2;">[ ADD VIDEO LINKS ]</button>
+                <button onclick="openModal('apiModal')" class="dynamic-color">[ API CONFIG ]</button>
+                <button onclick="openModal('pathModal')" class="dynamic-color">[ SET PATH ]</button>
+                <button onclick="openModal('linkModal')" class="dynamic-color" style="grid-column: span 2;">[ ADD VIDEO LINKS ]</button>
             </div>
 
             <div style="border-top: 1px dashed #333; margin: 20px 0;"></div>
 
             <div class="btn-grid">
-                <select id="dlMode">
+                <select id="dlMode" class="dynamic-color" aria-label="Download Mode" onchange="updateQualities()">
                     <option value="video">Video Downloader</option>
                     <option value="audio">Audio Only (MP3)</option>
                 </select>
-                <select id="dlQuality" onchange="checkManualQuality(this)">
-                    <option value="best">Best Possible</option>
-                    <option value="8k">8K (4320p)</option>
-                    <option value="4k">4K (2160p)</option>
-                    <option value="2k">2K (1440p)</option>
-                    <option value="1080p">Full HD (1080p)</option>
-                    <option value="720p">HD (720p)</option>
-                    <option value="480p">SD (480p)</option>
-                    <option value="360p">Low (360p)</option>
-                    <option value="lowest">Lowest Data</option>
-                    <option value="manual">>> MANUAL INPUT <<</option>
-                </select>
-                <button class="run-btn" onclick="startSystem()">>>> START SYSTEM <<<</button>
+                <select id="dlQuality" class="dynamic-color" aria-label="Quality" onchange="checkManualQuality(this)">
+                    </select>
+                <button class="run-btn dynamic-color" onclick="startSystem()">>>> START SYSTEM <<<</button>
             </div>
 
             <div class="terminal dynamic-color" id="logBox">
@@ -236,34 +240,39 @@
                 > Waiting for command...
             </div>
         </div>
-
         <div class="expiry-display" id="expiryDisplay"></div>
     </div>
 
     <div id="apiModal" class="modal-overlay">
         <div class="modal-box">
             <h3>CONFIGURE API KEYS</h3>
-            <textarea id="apiInput" rows="5" placeholder="AIzaSy..."></textarea>
-            <button onclick="saveApi()" style="margin-top:10px;">SAVE KEYS</button>
-            <button onclick="closeModal('apiModal')" style="margin-top:5px; background:#333;">CLOSE</button>
+            <textarea id="apiInput" rows="5" placeholder="AIzaSy..." class="modal-input"></textarea>
+            <div class="modal-btn-group">
+                <button onclick="saveApi()">SAVE KEYS</button>
+                <button onclick="closeModal('apiModal')" class="close-modal-btn">CLOSE</button>
+            </div>
         </div>
     </div>
 
     <div id="pathModal" class="modal-overlay">
         <div class="modal-box">
             <h3>SET DOWNLOAD PATH</h3>
-            <input type="text" id="pathInput" placeholder="C:\Downloads">
-            <button onclick="savePath()" style="margin-top:10px;">UPDATE PATH</button>
-            <button onclick="closeModal('pathModal')" style="margin-top:5px; background:#333;">CLOSE</button>
+            <input type="text" id="pathInput" placeholder="C:\Downloads" class="modal-input">
+            <div class="modal-btn-group">
+                <button onclick="savePath()">UPDATE PATH</button>
+                <button onclick="closeModal('pathModal')" class="close-modal-btn">CLOSE</button>
+            </div>
         </div>
     </div>
 
     <div id="linkModal" class="modal-overlay">
         <div class="modal-box">
             <h3>ADD TARGET LINKS</h3>
-            <textarea id="linkInput" rows="10" placeholder="https://..."></textarea>
-            <button onclick="saveLinks()" style="margin-top:10px;">SAVE DATABASE</button>
-            <button onclick="closeModal('linkModal')" style="margin-top:5px; background:#333;">CLOSE</button>
+            <textarea id="linkInput" rows="10" placeholder="https://..." class="modal-input"></textarea>
+            <div class="modal-btn-group">
+                <button onclick="saveLinks()">SAVE DATABASE</button>
+                <button onclick="closeModal('linkModal')" class="close-modal-btn">CLOSE</button>
+            </div>
         </div>
     </div>
 
@@ -287,10 +296,89 @@
     </div>
 
     <script>
-        // GLOBAL VARIABLES
-        let manualFormat = null;
+        // --- QUALITY LISTS ---
+        const videoQualities = [
+            {val: "best", text: "Best Possible (Recommended)"},
+            {val: "8k", text: "8K (4320p)"},
+            {val: "4k", text: "4K (2160p)"},
+            {val: "2k", text: "2K (1440p)"},
+            {val: "1080p", text: "Full HD (1080p)"},
+            {val: "720p", text: "HD (720p)"},
+            {val: "480p", text: "SD (480p)"},
+            {val: "360p", text: "Low (360p)"},
+            {val: "lowest", text: "Lowest Data"},
+            {val: "manual", text: ">> MANUAL INPUT <<"}
+        ];
 
-        // --- CUSTOM ALERT SYSTEM ---
+        const audioQualities = [
+            {val: "best_audio", text: "Best Possible (Recommended)"},
+            {val: "320k", text: "High Quality (320kbps)"},
+            {val: "256k", text: "Standard (256kbps)"},
+            {val: "192k", text: "Medium (192kbps)"},
+            {val: "128k", text: "Low (128kbps)"},
+            {val: "64k", text: "Very Low (64kbps)"},
+            {val: "manual", text: ">> MANUAL INPUT <<"}
+        ];
+
+        function updateQualities() {
+            const mode = document.getElementById('dlMode').value;
+            const qSelect = document.getElementById('dlQuality');
+            qSelect.innerHTML = "";
+
+            const list = (mode === 'video') ? videoQualities : audioQualities;
+
+            list.forEach(q => {
+                let opt = document.createElement('option');
+                opt.value = q.val;
+                opt.innerText = q.text;
+                qSelect.appendChild(opt);
+            });
+        }
+        // Init on load
+        updateQualities();
+
+        // --- LOGIN & REMEMBER ME ---
+        window.onload = function() {
+            const savedUser = localStorage.getItem('savedUser');
+            const savedPass = localStorage.getItem('savedPass');
+            if(savedUser && savedPass) {
+                document.getElementById('loginUser').value = savedUser;
+                document.getElementById('loginPass').value = savedPass;
+                document.getElementById('rememberMe').checked = true;
+            }
+        };
+
+        function handleLogin() {
+            const u = document.getElementById('loginUser').value;
+            const p = document.getElementById('loginPass').value;
+            const remember = document.getElementById('rememberMe').checked;
+
+            if(!u || !p) { showAlert("LOGIN ERROR", "Please enter Username & Password"); return; }
+
+            fetch('/login', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: u, password: p})
+            }).then(res => res.json()).then(data => {
+                if(data.status === 'success') {
+                    if(remember) {
+                        localStorage.setItem('savedUser', u);
+                        localStorage.setItem('savedPass', p);
+                    } else {
+                        localStorage.removeItem('savedUser');
+                        localStorage.removeItem('savedPass');
+                    }
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('appSection').classList.remove('hidden');
+                    document.getElementById('expiryDisplay').innerText = "EXPIRES: " + data.expiry;
+                } else {
+                    // Show social icons on error
+                    document.getElementById('alertSocials').classList.remove('hidden');
+                    showAlert("ACCESS DENIED", data.message + "\nContact Admin for Password:");
+                }
+            });
+        }
+
+        // --- ALERT SYSTEM ---
         function showAlert(title, msg) {
             document.getElementById('alertTitle').innerText = title;
             document.getElementById('alertMsg').innerText = msg;
@@ -298,50 +386,16 @@
         }
         function closeAlert() {
             document.getElementById('customAlert').style.display = 'none';
+            // Hide socials for next normal alerts
+            document.getElementById('alertSocials').classList.add('hidden');
         }
 
-        // --- LOGIN SYSTEM ---
-        function handleLogin() {
-            const u = document.getElementById('loginUser').value;
-            const p = document.getElementById('loginPass').value;
-
-            if(!u || !p) { showAlert("LOGIN ERROR", "Please enter Username & Password"); return; }
-
-            fetch('/login', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username: u, password: p})
-            }).then(res => res.json()).then(data => {
-                if(data.status === 'success') {
-                    document.getElementById('loginSection').classList.add('hidden');
-                    document.getElementById('appSection').classList.remove('hidden');
-                    document.getElementById('expiryDisplay').innerText = "EXPIRES: " + data.expiry;
-                } else {
-                    showAlert("ACCESS DENIED", data.message + "\n\nContact Admin: FB/WhatsApp");
-                }
-            });
-        }
-
-        function showDeviceId() {
-            fetch('/get_device_id').then(res => res.json()).then(data => {
-                document.getElementById('deviceIdDisp').value = data.device_id;
-                document.getElementById('deviceIdModal').style.display = 'flex';
-            });
-        }
-
-        function copyDeviceId() {
-            const copyText = document.getElementById("deviceIdDisp");
-            copyText.select();
-            document.execCommand("copy");
-            showAlert("COPIED", "Device ID copied to clipboard!");
-            closeModal('deviceIdModal');
-        }
-
-        // --- DRAWER & COLOR ---
+        // --- OTHER LOGIC (DRAWER, COLOR, MODALS) ---
         function openDrawer() { document.getElementById("myDrawer").classList.add('open'); }
         function closeDrawer() { document.getElementById("myDrawer").classList.remove('open'); }
         function toggleColorPopup() { const p = document.getElementById("colorPopup"); p.style.display = (p.style.display === "block") ? "none" : "block"; }
         function enablePicker() { document.getElementById("staticPicker").style.display = "block"; document.getElementById("staticPicker").click(); }
+
         function setTheme(mode) {
             if(mode === 'rgb') {
                 document.getElementById("staticPicker").style.display = "none";
@@ -352,69 +406,43 @@
             }
         }
 
-        // --- MANUAL QUALITY ---
-        function checkManualQuality(sel) {
-            if(sel.value === 'manual') {
-                document.getElementById('manualModal').style.display = 'flex';
-            }
+        function showDeviceId() {
+            fetch('/get_device_id').then(res => res.json()).then(data => {
+                document.getElementById('deviceIdDisp').value = data.device_id;
+                document.getElementById('deviceIdModal').style.display = 'flex';
+            });
         }
-        function confirmManual() {
-            manualFormat = document.getElementById('manualInput').value;
-            closeModal('manualModal');
-            showAlert("SET", "Manual format set: " + manualFormat);
+        function copyDeviceId() {
+            const copyText = document.getElementById("deviceIdDisp");
+            copyText.select(); document.execCommand("copy");
+            showAlert("COPIED", "Device ID copied to clipboard!");
+            closeModal('deviceIdModal');
         }
 
-        // --- MODALS & API ---
+        let manualFormat = null;
+        function checkManualQuality(sel) { if(sel.value === 'manual') openModal('manualModal'); }
+        function confirmManual() { manualFormat = document.getElementById('manualInput').value; closeModal('manualModal'); showAlert("SET", "Format set: " + manualFormat); }
+
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function saveApi() {
-            fetch('/save_api', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({keys: document.getElementById('apiInput').value})
-            }).then(res => res.json()).then(data => {
-                closeModal('apiModal');
-                showAlert("SUCCESS", "API Keys Saved Successfully!");
-                setTimeout(() => location.reload(), 1500);
-            });
+            fetch('/save_api', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({keys: document.getElementById('apiInput').value}) })
+            .then(res => res.json()).then(data => { closeModal('apiModal'); showAlert("SUCCESS", "API Keys Saved!"); setTimeout(() => location.reload(), 1500); });
         }
-
         function saveLinks() {
-            fetch('/save_links', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({links: document.getElementById('linkInput').value})
-            }).then(res => {
-                closeModal('linkModal');
-                showAlert("UPDATED", "Links Database Updated!");
-            });
+            fetch('/save_links', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({links: document.getElementById('linkInput').value}) })
+            .then(res => { closeModal('linkModal'); showAlert("UPDATED", "Links Database Updated!"); });
         }
-
         function savePath() {
-            fetch('/save_path', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({path: document.getElementById('pathInput').value})
-            }).then(res => {
-                closeModal('pathModal');
-                showAlert("UPDATED", "Download Path Updated!");
-                setTimeout(() => location.reload(), 1500);
-            });
+            fetch('/save_path', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({path: document.getElementById('pathInput').value}) })
+            .then(res => { closeModal('pathModal'); showAlert("UPDATED", "Path Updated!"); setTimeout(() => location.reload(), 1500); });
         }
-
         function startSystem() {
             const mode = document.getElementById('dlMode').value;
             const quality = document.getElementById('dlQuality').value;
-
-            fetch('/start_download', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({mode: mode, quality: quality, manual_fmt: manualFormat})
-            });
-            setInterval(updateLog, 1000);
-        }
-
-        function updateLog() {
-            fetch('/get_status').then(res => res.json()).then(data => {
-                document.getElementById('logBox').innerHTML = "> " + data.log;
-            });
+            fetch('/start_download', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({mode: mode, quality: quality, manual_fmt: manualFormat}) });
+            setInterval(() => { fetch('/get_status').then(res => res.json()).then(data => { document.getElementById('logBox').innerHTML = "> " + data.log; }); }, 1000);
         }
     </script>
 </body>

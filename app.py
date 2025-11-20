@@ -9,6 +9,7 @@ import google.generativeai as genai
 import re
 import uuid
 import hashlib
+import requests
 from datetime import datetime
 
 app = Flask(__name__)
@@ -18,7 +19,11 @@ CONFIG_FILE = "config.json"
 API_KEYS_FILE = "api_keys.txt"
 LINKS_FILE = "links.txt"
 FFMPEG_FOLDER = os.path.join(os.getcwd(), "ffmpeg")
-USERS_DB_FILE = "users.txt"  # লোকাল ডাটাবেস ফাইল
+
+# ⚠️ IMPORTANT: PASTE YOUR GITHUB RAW LINK HERE
+USERS_DB_URL = (
+    "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/users.txt"
+)
 
 # Admin Profile
 ADMIN_INFO = {
@@ -104,7 +109,7 @@ def get_ai_filename(title):
     return None
 
 
-# --- SECURITY & LOGIN ROUTES ---
+# --- SECURITY ROUTES (ONLINE CHECK) ---
 
 
 @app.route("/get_device_id", methods=["GET"])
@@ -121,16 +126,15 @@ def login():
     device_id = str(uuid.getnode())
 
     try:
-        # লোকাল ফাইল চেক
-        if not os.path.exists(USERS_DB_FILE):
+        # Fetch Database from GitHub (Online)
+        response = requests.get(USERS_DB_URL)
+        if response.status_code != 200:
             return jsonify(
-                {"status": "error", "message": "Database File Missing (users.txt)!"}
+                {"status": "error", "message": "Server Offline. Contact Admin."}
             )
 
-        with open(USERS_DB_FILE, "r") as f:
-            user_db = f.readlines()
+        user_db = response.text.strip().split("\n")
 
-        # ইনপুট পাসওয়ার্ড হ্যাশ করা
         input_hash = hashlib.sha256(password.encode()).hexdigest()
 
         for line in user_db:
@@ -140,19 +144,20 @@ def login():
 
             db_device, db_user, db_pass, db_expiry = parts
 
-            # ইউজারনেম ও পাসওয়ার্ড চেক
             if db_user == username and db_pass == input_hash:
-
-                # ডিভাইস আইডি চেক
+                # Device Lock Check
                 if db_device != device_id:
                     return jsonify(
-                        {"status": "error", "message": "Access Denied! Wrong Device."}
+                        {
+                            "status": "error",
+                            "message": "Access Denied! Device Mismatch.",
+                        }
                     )
 
-                # এক্সপায়ার ডেট এবং টাইম চেক
+                # Expiry Check (Date & Time)
                 if db_expiry != "LIFETIME":
                     try:
-                        # নতুন ফরম্যাট: YYYY-MM-DD HH:MM:SS
+                        # Format: YYYY-MM-DD HH:MM:SS
                         expiry_date = datetime.strptime(db_expiry, "%Y-%m-%d %H:%M:%S")
                         if datetime.now() > expiry_date:
                             return jsonify(
@@ -162,19 +167,25 @@ def login():
                                 }
                             )
                     except ValueError:
-                        return jsonify(
-                            {
-                                "status": "error",
-                                "message": "Date Format Error in Database!",
-                            }
-                        )
+                        # Fallback for date only
+                        try:
+                            expiry_date = datetime.strptime(db_expiry, "%Y-%m-%d")
+                            if datetime.now() > expiry_date:
+                                return jsonify(
+                                    {
+                                        "status": "error",
+                                        "message": "Subscription Expired!",
+                                    }
+                                )
+                        except:
+                            pass
 
                 return jsonify({"status": "success", "expiry": db_expiry})
 
         return jsonify({"status": "error", "message": "Invalid Username or Password!"})
 
     except Exception as e:
-        return jsonify({"status": "error", "message": f"System Error: {str(e)}"})
+        return jsonify({"status": "error", "message": f"Connection Error: {str(e)}"})
 
 
 # --- APP ROUTES ---
@@ -259,6 +270,7 @@ def run_download_process(mode, quality_code, manual_fmt=None):
 
     # Quality Map
     q_map = {
+        # Video
         "best": "bestvideo+bestaudio/best",
         "8k": "bestvideo[height<=4320]+bestaudio/best",
         "4k": "bestvideo[height<=2160]+bestaudio/best",
@@ -268,7 +280,13 @@ def run_download_process(mode, quality_code, manual_fmt=None):
         "480p": "bestvideo[height<=480]+bestaudio/best",
         "360p": "bestvideo[height<=360]+bestaudio/best",
         "lowest": "worstvideo+bestaudio/worst",
-        "audio": "bestaudio/best",
+        # Audio
+        "best_audio": "bestaudio/best",
+        "320k": "bestaudio",
+        "256k": "bestaudio",
+        "192k": "bestaudio",
+        "128k": "bestaudio[abr<=128]",
+        "64k": "bestaudio[abr<=64]",
     }
 
     if quality_code == "manual" and manual_fmt:
@@ -277,7 +295,8 @@ def run_download_process(mode, quality_code, manual_fmt=None):
         fmt = q_map.get(quality_code, "bestvideo+bestaudio/best")
 
     if mode == "audio":
-        fmt = "bestaudio/best"
+        if "bestvideo" in fmt:
+            fmt = "bestaudio/best"
 
     opts = {
         "format": fmt,
@@ -288,8 +307,20 @@ def run_download_process(mode, quality_code, manual_fmt=None):
     }
 
     if mode == "audio":
+        q_val = "192"
+        if quality_code == "320k":
+            q_val = "320"
+        if quality_code == "128k":
+            q_val = "128"
+        if quality_code == "64k":
+            q_val = "64"
+
         opts["postprocessors"] = [
-            {"key": "FFmpegExtractAudio", "preferredcodec": "mp3"}
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": q_val,
+            }
         ]
 
     for i, url in enumerate(urls, 1):
