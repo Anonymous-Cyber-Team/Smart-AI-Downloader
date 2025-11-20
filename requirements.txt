@@ -1,0 +1,5 @@
+flask
+yt-dlp
+colorama
+google-generativeai
+pyinstaller

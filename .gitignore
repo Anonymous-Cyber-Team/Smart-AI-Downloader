@@ -1,0 +1,24 @@
+# Virtual Environment (সবচেয়ে জরুরি)
+venv/
+env/
+
+# Heavy Tools (গিটহাবে আপলোড হবে না)
+ffmpeg/
+*.exe
+*.zip
+*.rar
+
+# Python Cache Files
+__pycache__/
+*.pyc
+
+# Private User Data (সিকিউরিটির জন্য)
+api_keys.txt
+config.json
+links.txt
+hash_tool.py
+
+# Build Artifacts (সফটওয়্যার বানানোর সময় তৈরি হয়)
+dist/
+build/
+*.spec
