@@ -19,6 +19,8 @@ links.txt
 hash_tool.py
 command.txt
 app_backup_secret.py
+index_original.html
+minify_ui.py
 
 # Build Artifacts (সফটওয়্যার বানানোর সময় তৈরি হয়)
 dist/
