@@ -6,7 +6,7 @@
 ![AI
 Power](https://img.shields.io/badge/AI-Google%20Gemini%20%26%20Gemma-purple?style=for-the-badge)
 
-**Smart AI Downloader** হলো নেক্সট-লেভেল অটোমেটেড বাল্ক ভিডিও ডাউনলোডার।
+**Smart AI Downloader** হলো নেক্সট-লেভেল অটোমেটেড ভিডিও ডাউনলোডার।
 এখানে **Google Gemini AI** ভিডিওর নাম স্মার্টভাবে ঠিক করে, ইমোজি রিমুভ
 করে এবং সিস্টেম এরর ফিক্স করে হাই-কোয়ালিটিতে (8K/4K) ডাউনলোড করতে দেয়।
 
