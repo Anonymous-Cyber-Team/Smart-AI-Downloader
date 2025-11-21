@@ -17,6 +17,7 @@ api_keys.txt
 config.json
 links.txt
 hash_tool.py
+command.txt
 
 # Build Artifacts (সফটওয়্যার বানানোর সময় তৈরি হয়)
 dist/

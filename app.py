@@ -21,9 +21,7 @@ LINKS_FILE = "links.txt"
 FFMPEG_FOLDER = os.path.join(os.getcwd(), "ffmpeg")
 
 # ⚠️ IMPORTANT: PASTE YOUR GITHUB RAW LINK HERE
-USERS_DB_URL = (
-    "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/users.txt"
-)
+USERS_DB_URL = "https://raw.githubusercontent.com/Anonymous-Cyber-Team/Smart-AI-Downloader/refs/heads/main/users.txt"
 
 # Admin Profile
 ADMIN_INFO = {
@@ -93,17 +91,26 @@ def get_ai_filename(title):
     if not AI_STATUS:
         return None
     keys = load_api_keys()
-    prompt = (
-        f"Rename for Windows filename (Short, No Emojis, No Special Chars): '{title}'"
-    )
+
+    # প্রম্পট আরো কড়া করা হলো যাতে AI বাড়তি কথা না বলে
+    prompt = f"Act as a file renamer. Rename this video title for a Windows file. Output ONLY the new filename. No explanations, no options, no quotes, no bullet points. Rules: Short (max 10 words), No Emojis, No Special Chars. Title: '{title}'"
 
     for key in keys:
         try:
             genai.configure(api_key=key)
             model = genai.GenerativeModel(ACTIVE_MODEL)
             res = model.generate_content(prompt)
+
             if res.text:
-                return re.sub(r'[<>:"/\\|?*]', "", res.text.strip())
+                # ১. শুধু প্রথম লাইনটা নেব (যদি সে প্যারাগ্রাফ লেখে)
+                clean_name = res.text.strip().split("\n")[0]
+                # ২. কোটেশন মার্ক রিমুভ করব
+                clean_name = (
+                    clean_name.replace('"', "").replace("'", "").replace("`", "")
+                )
+                # ৩. উইন্ডোজের নিষিদ্ধ ক্যারেক্টার রিমুভ করব
+                clean_name = re.sub(r'[<>:"/\\|?*]', "", clean_name)
+                return clean_name.strip()
         except:
             continue
     return None
