@@ -18,6 +18,7 @@ config.json
 links.txt
 hash_tool.py
 command.txt
+app_backup_secret.py
 
 # Build Artifacts (সফটওয়্যার বানানোর সময় তৈরি হয়)
 dist/
