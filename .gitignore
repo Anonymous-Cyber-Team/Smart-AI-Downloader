@@ -21,6 +21,7 @@ command.txt
 app_backup_secret.py
 index_original.html
 minify_ui.py
+access.txt
 
 # Build Artifacts (সফটওয়্যার বানানোর সময় তৈরি হয়)
 dist/
